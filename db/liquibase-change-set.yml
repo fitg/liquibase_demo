@@ -1,0 +1,93 @@
+databaseChangeLog:
+    - preConditions:
+      - runningAs:
+          username: liquibase_dev
+      - dmbs:
+          type: mysql
+
+    - changeSet:
+        id: CV1-186-1-create-table-person
+        comment: CV1-186 Liquibase demo for DB change control
+        author: gfit
+        changes:
+        - createTable:
+            tableName: person
+            columns:
+                - column:
+                    name: id
+                    type: int
+                    autoIncrement: true
+                    constraints:
+                        primaryKey: true
+                        nullable: false
+                - column:
+                    name: firstname
+                    type: varchar(50)
+                - column:
+                    name: lastname
+                    type: varchar(50)
+                    constraints:
+                        nullable: false
+                - column:
+                    name: state
+                    type: char(2)
+
+    - changeSet:
+        id: CV1-186-2-alter-table-person
+        author: gfit
+        comment: CV1-186 Liquibase demo for DB change control
+        changes:
+        - addColumn:
+            tableName: person
+            columns:
+                - column:
+                    name: username
+                    type: varchar(8)
+
+    - changeSet:
+        id: CV1-186-3-add-lookup-table
+        comment: CV1-186 Liquibase demo for DB change control
+        author: gfit
+        changes:
+        - addLookupTable:
+            existingTableName: person
+            existingColumnName: state
+            newTableName: state
+            newColumnName: id
+            newColumnDataType: char(2)
+
+    - changeSet:
+        id: CV1-186-4-run-sql
+        comment: CV1-186 Liquibase demo for DB change control
+        author: gfit        
+        changes:
+        - sql:
+            dbms: mysql
+            endDelimiter: \nGO
+            splitStatements: true
+            sql: insert into users (Authors) values ('Bob')
+            stripComments: true 
+        rollback:
+        - sql:
+            dbms: mysql
+            sql: TRUNCATE TABLE users;
+
+    - changeSet:
+        id: CV1-186-5-run-sql-from-file
+        author: gfit
+        changes:
+        - sqlFile:
+            dbms: mysql
+            endDelimiter: \nGO
+            path: db-change/CV1-186-liquibase_dev_apply.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+        rollback:
+        - sqlFile:
+            dbms: mysql
+            endDelimiter: \nGO
+            path: db-change/CV1-186-liquibase_dev_rollback.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
