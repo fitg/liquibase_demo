@@ -1,6 +1,5 @@
 ### Description
 
-This project is written on the back of the article: https://zpgltd.atlassian.net/wiki/spaces/FV/pages/1450968425/Data+Schema+Migrations.
 The purpose is to show liquibase capabilities on a simple application.
 
 ### Goal of the demo
@@ -28,7 +27,7 @@ For any other questions, suggest to refer to liquibase documentation.
 
 sh run_demo.sh
 
-You can access MySQL adminer on [your ec2-ip]:8080 to review changes as specific steps go through
+You can access MySQL adminer on [localhost]:8080 to review changes as specific steps go through
 
 ### Liquibase links
 
